@@ -1,85 +1,80 @@
 import React, { Component } from 'react';
-import {
-    View,
-    Text,    
-    Image,    
-    TouchableHighlight,        
-    StyleSheet
-} from 'react-native';
+import { Image, StyleSheet, View, TouchableHighlight, Alert } from 'react-native';
+import { Card, CardItem, Text, Left, Body, Right } from 'native-base';
+import * as Font from "expo-font";
 
 export default class CarrosComponent extends Component {
 
-    state = {        
+    state = {
         id: this.props.data.id,
         img: this.props.data.img,
         nome: this.props.data.nome,
-        marca: this.props.data.marca,
-        ano: this.props.data.ano        
+        cor: this.props.data.cor,
+        ano: `${this.props.data.ano}/${this.props.data.ano}`,
+        fabricante: this.props.data.fabricante,
+        valor: `R$ ${this.props.data.valor}`
     };
+
+    async componentDidMount() {
+        await Font.loadAsync({
+            Roboto: require("../../node_modules/native-base/Fonts/Roboto.ttf"),
+            Roboto_medium: require("../../node_modules/native-base/Fonts/Roboto_medium.ttf")
+        });
+    }
 
     render() {
 
         return (
-
-            <View>
-
-                <TouchableHighlight underlayColor={'#EAEAEA'} >
-
-                    <View style={styles.cardCarro}>
-
-                        <Image source={{ uri: this.state.img.replace('http:', 'https:') }} style={styles.carroImagem} />
-
-                        <View style={styles.carroInfo}>
+            <TouchableHighlight underlayColor={'transparent'} onPress={() => { Alert.alert(this.state.nome) }}>
+                <Card>
+                    <CardItem>
+                        <Body>
                             <Text style={styles.carroNome}>{this.state.nome}</Text>
-                            <Text>Código: {this.state.id}</Text>
-                            <Text>Marca: {this.state.marca}</Text>
-                            <Text>Ano: {this.state.ano}</Text>                            
-                        </View>
-
-                    </View>
-
-                </TouchableHighlight>
-
-            </View >
+                            <Text note>{this.state.fabricante}</Text>
+                        </Body>
+                        <Right>
+                            <Text />
+                            <Text note>{this.state.ano}</Text>
+                        </Right>
+                    </CardItem>
+                    <CardItem cardBody>
+                        <Image source={{ uri: this.state.img }} style={styles.carroImagem} />
+                    </CardItem>
+                    <CardItem>
+                        <Left>
+                            <Text>{this.state.cor}</Text>
+                        </Left>
+                        <Right>
+                            <Text style={styles.valorCarro}>{this.state.valor}</Text>
+                        </Right>
+                    </CardItem>
+                </Card>
+            </TouchableHighlight>
         );
     }
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
     loading: {
         justifyContent: 'center',
         alignItems: 'center'
     },
-    cardCarro: {
-        margin: 5,
-        borderWidth: 1,
-        borderRadius: 8,
-        borderColor: '#EAEAEA',
-        backgroundColor: '#C0CCDA25',
-        opacity: 5,
-        height: 300
-    },
     carroImagem: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        flex: 1,
         margin: 5,
-        height: 150,
+        height: 250,
         borderWidth: 2,
         borderRadius: 10,
-    },
-    carroInfo: {
-        flex: 1,
-        flexDirection: 'column',
-        margin: 8
     },
     carroNome: {
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
         justifyContent: 'center'
+    },
+    valorCarro: {
+        fontSize: 25,
+        fontWeight: 'bold'
     }
 });
