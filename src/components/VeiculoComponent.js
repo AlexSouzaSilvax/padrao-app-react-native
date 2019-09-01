@@ -9,10 +9,10 @@ export default class VeiculoComponent extends Component {
         id: this.props.data.id,
         img: this.props.data.img,
         nome: this.props.data.nome,
+        fabricante: this.props.data.fabricante,        
         cor: this.props.data.cor,
-        ano: `${this.props.data.ano}/${this.props.data.ano}`,
-        fabricante: this.props.data.fabricante,
-        valor: `R$ ${this.props.data.valor}`
+        ano: `${this.props.data.ano}/${this.props.data.ano}`,        
+        valor: `R$ ${this.props.data.valor}`        
     };
 
     async componentDidMount() {
@@ -25,7 +25,7 @@ export default class VeiculoComponent extends Component {
     render() {
 
         return (
-            <TouchableHighlight underlayColor={'transparent'} onPress={() => { Alert.alert(this.state.nome) }}>
+            <TouchableHighlight underlayColor={'transparent'} onPress={this.props.onPress}>
                 <Card>
                     <CardItem>
                         <Body>

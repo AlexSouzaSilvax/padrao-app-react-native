@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
-import { Alert, Text, RefreshControl, View, FlatList, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { RefreshControl, View, FlatList, Image } from 'react-native';
 import axios from 'axios';
-
 import { url } from '../util'
-
 import VeiculoComponent from '../components/VeiculoComponent';
-
-import ActionButton from 'react-native-action-button';
+import BotaoFlutuante from '../components/BotaoFlutuanteAdc';
 
 export default class Caminhao extends React.Component {
 
@@ -52,10 +49,15 @@ export default class Caminhao extends React.Component {
                 <FlatList
                     data={this.state.caminhao}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <VeiculoComponent data={item} />}
+                    renderItem={({ item }) =>
+                        <VeiculoComponent
+                            data={item}
+                            onPress={() => { this.props.navigation.navigate('DetalheVeiculo', { data: item, titulo: item.nome }) }}
+                        />
+                    }
                     refreshControl={<RefreshControl onRefresh={this.onRefresh.bind(this)} />}
                 />
-                <ActionButton buttonColor="#16164E" onPress={() => Alert.alert("Implementar adicionar!")} />
+                <BotaoFlutuante onPress={() => { this.props.navigation.navigate('DetalheVeiculo') }} />
             </View>
         );
     }

@@ -6,6 +6,7 @@ import Login from './src/screens/Login';
 import Carros from './src/screens/Carros';
 import Motos from './src/screens/Motos';
 import Caminhao from './src/screens/Caminhao';
+import DetalheVeiculo from './src/screens/DetalheVeiculo';
 
 import colors from './src/styles/colors';
 
@@ -65,6 +66,9 @@ const AppNavigator = createStackNavigator({
       },
       headerTintColor: '#FFFFFF'
     }),
+  },
+  DetalheVeiculo: {
+    screen: DetalheVeiculo
   }
 });
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     View,
     StyleSheet,
@@ -15,8 +15,9 @@ import {
 
 import { url } from '../util'
 import colors from '../styles/colors';
+import axios from 'axios';
 
-export default class Login extends Component {
+export default class Login extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         headerTransparent: true
     });
@@ -27,7 +28,7 @@ export default class Login extends Component {
         this.state = {
             data: [],
             login: 'alex.silva',
-            senha: 'alex.silva',
+            senha: '123',
             loading: false
         };
 
@@ -101,7 +102,7 @@ export default class Login extends Component {
         );
     }
 
-    validacaoLogin() {
+    async validacaoLogin() {
 
         if (this.state.login == null || this.state.senha == null || this.state.login == '' || this.state.senha == '') {
             Alert.alert('Login/Senha é obrigatório.');
@@ -109,61 +110,60 @@ export default class Login extends Component {
         } else {
             this.setState({ loading: true });
 
-            /* fetch(url + 'usuarios/' + this.state.login + '/' + this.state.senha)
-                 .then((response) => response.json())
-                 .then((responseJson) => {
-                     this.setState({ data: responseJson, loading: false });
-                     console.log('Json login Carregado.');
- 
-                     console.log('Tamanho da resposta: ' + this.state.data.length);
- 
-                     if (this.state.data.length == 0) {
-                         console.log('A base retornou vazio/null.');
-                         //Alert.alert('Usuário inválido.', 'Tente novamente.');
- 
-                         ToastAndroid.showWithGravityAndOffset(
-                             'Usuário inválido.\nTente novamente',
-                             ToastAndroid.LONG,
-                             ToastAndroid.BOTTOM,
-                             25,
-                             50,
-                         );
- 
-                     } else {
- 
-                         for (let i = 0; i < this.state.data.length; i++) {
- */
-            //if (this.state.login == this.state.data[i].login && this.state.senha == this.state.data[i].senha) {
+            await axios.get(url + 'usuarios/' + this.state.login + '/' + this.state.senha)
+                .then((response) => {
+                    this.setState({ data: response.data, loading: false });
+                    console.log('Json login Carregado.');
 
-            AsyncStorage.setItem('userToken', 'abc');
-            this.props.navigation.navigate('Home');
-            //this.props.navigation.navigate('VeiculoComponent');
+                    console.log('Tamanho da resposta: ' + this.state.data.length);
 
-            //Alert.alert('Usuário válido!\nLogin: ' + this.state.login);
-            //console.log('Usuário válido. Login: ' + this.state.login);
+                    if (this.state.data.length == 0) {
+                        console.log('A base retornou vazio/null.');
+                        //Alert.alert('Usuário inválido.', 'Tente novamente.');
 
-            ToastAndroid.showWithGravityAndOffset(
-                //'Usuário válido.',
-                'Seja bem-vindo: ' + this.state.login,
-                ToastAndroid.LONG,
-                ToastAndroid.BOTTOM,
-                25,
-                50,
-            );
+                        ToastAndroid.showWithGravityAndOffset(
+                            'Usuário inválido.\nTente novamente',
+                            ToastAndroid.LONG,
+                            ToastAndroid.BOTTOM,
+                            25,
+                            50,
+                        );
 
-            this.setState({ loading: false });
+                    } else {
 
-            //}
+                        for (let i = 0; i < this.state.data.length; i++) {
 
-            /*  }
-          }
-      
-          console.log('Acabou o método.');
-      })
-                      .catch ((error) => {
-          console.error(error);
-          Alert.alert(`Base Offline.`);
-      });*/
+                            if (this.state.login == this.state.data[i].login && this.state.senha == this.state.data[i].senha) {
+
+                                AsyncStorage.setItem('userToken', 'abc');
+                                this.props.navigation.navigate('Home');
+                                //this.props.navigation.navigate('VeiculoComponent');
+
+                                //Alert.alert('Usuário válido!\nLogin: ' + this.state.login);
+                                console.log('Usuário válido. Login: ' + this.state.login);
+
+                                ToastAndroid.showWithGravityAndOffset(
+                                    //'Usuário válido.',
+                                    'Seja bem-vindo: ' + this.state.login,
+                                    ToastAndroid.LONG,
+                                    ToastAndroid.BOTTOM,
+                                    25,
+                                    50,
+                                );
+
+                                this.setState({ loading: false });
+
+                            }
+
+                        }
+                    }
+
+                    console.log('Acabou o método.');
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Alert.alert(`Base Offline.`);
+                });
         }
     }
 }
