@@ -107,9 +107,7 @@ export default class Login extends Component {
             Alert.alert('Login/Senha é obrigatório.');
             //console.log('Login/Senha é obrigatório.');
         } else {
-            this.setState({
-                loading: true
-            });
+            this.setState({ loading: true });
 
             /* fetch(url + 'usuarios/' + this.state.login + '/' + this.state.senha)
                  .then((response) => response.json())
@@ -152,6 +150,8 @@ export default class Login extends Component {
                 25,
                 50,
             );
+
+            this.setState({ loading: false });
 
             //}
 

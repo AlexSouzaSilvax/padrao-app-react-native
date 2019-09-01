@@ -1,8 +1,11 @@
+import React, { Component } from 'react';
+import { Image } from 'react-native';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 
 import Login from './src/screens/Login';
 import Carros from './src/screens/Carros';
-import Motos from './src/screens/Carros';
+import Motos from './src/screens/Motos';
+import Caminhao from './src/screens/Caminhao';
 
 import colors from './src/styles/colors';
 
@@ -18,13 +21,22 @@ const AppNavigator = createStackNavigator({
       Carros: {
         screen: Carros,
         navigationOptions: {
-          title: 'Carros'
+          title: 'Carros',
+          tabBarIcon: <Image source={require('./assets/carVer.png')} style={{ width: 40, height: 40 }} />
         }
       },
       Motos: {
         screen: Motos,
         navigationOptions: {
-          title: 'Motos'
+          title: 'Motos',
+          tabBarIcon: <Image source={require('./assets/motoVerBran.png')} style={{ width: 40, height: 40 }} />
+        }
+      },
+      Caminhao: {
+        screen: Caminhao,
+        navigationOptions: {
+          title: 'Caminhões',
+          tabBarIcon: <Image source={require('./assets/truckVerBran.png')} style={{ width: 38, height: 38 }} />
         }
       }
     }, {

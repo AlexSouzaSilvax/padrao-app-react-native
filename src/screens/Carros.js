@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Text, RefreshControl, View, FlatList, Image } from 'react-native';
+import { Alert, Text, RefreshControl, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 
 import { url } from '../util'
 
-import CarrosComponent from '../components/CarrosComponent';
+import VeiculoComponent from '../components/VeiculoComponent';
+
+import ActionButton from 'react-native-action-button';
 
 export default class Carros extends React.Component {
 
@@ -50,9 +52,10 @@ export default class Carros extends React.Component {
                 <FlatList
                     data={this.state.carros}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <CarrosComponent data={item} />}
+                    renderItem={({ item }) => <VeiculoComponent data={item} />}
                     refreshControl={<RefreshControl onRefresh={this.onRefresh.bind(this)} />}
                 />
+                <ActionButton buttonColor="#16164E" onPress={() => Alert.alert("Implementar adicionar!")} />
             </View>
         );
     }
