@@ -12,7 +12,6 @@ import {
 import { Card, CardItem, Text, Left, Body, Right } from 'native-base';
 
 import { url } from '../util'
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default class DetalheVeiculo extends React.Component {
 
@@ -43,12 +42,13 @@ export default class DetalheVeiculo extends React.Component {
 
     render() {
         return (
-            <View style={{ margin: 5 }}>
+            <KeyboardAvoidingView style={{ margin: 5 }}  behavior="padding" enabled >
 
-                <Card>
-                    <CardItem cardBody>
-                        <Image source={{ uri: this.state.img }} style={styles.carroImagem} />
-                    </CardItem>
+
+                <CardItem cardBody>
+                    <Image source={{ uri: this.state.img }} style={styles.carroImagem} />
+                </CardItem>
+                
                     <CardItem>
                         <Body>
                             <TextInput
@@ -57,16 +57,19 @@ export default class DetalheVeiculo extends React.Component {
                                 value={this.state.nome}
                                 onChangeText={(nome) => this.setState({ nome })}
                             />
-                            <Text />
+                        </Body>
+                    </CardItem>
+
+                    <CardItem>
+                        <Left>
                             <TextInput
                                 placeholder={'Fabricante'}
                                 style={styles.inputModal}
                                 value={this.state.fabricante}
                                 onChangeText={(fabricante) => this.setState({ fabricante })}
                             />
-                        </Body>
+                        </Left>
                         <Right>
-                            <Text />
                             <TextInput
                                 placeholder={'Ano'}
                                 style={styles.inputModal2}
@@ -75,6 +78,7 @@ export default class DetalheVeiculo extends React.Component {
                             />
                         </Right>
                     </CardItem>
+
                     <CardItem>
                         <Left>
                             <TextInput
@@ -92,9 +96,7 @@ export default class DetalheVeiculo extends React.Component {
                                 onChangeText={(valor) => this.setState({ valor })}
                             />
                         </Right>
-                    </CardItem>
-                </Card>
-
+                    </CardItem>                
 
                 <View style={{ flexDirection: 'row' }}>
 
@@ -128,6 +130,9 @@ export default class DetalheVeiculo extends React.Component {
                                         Alert.alert('Salvo com sucesso.');
                                         console.log('Alterado com sucesso.');
 
+                                        //this.props.navigation.goBack();
+                                        this.props.navigation.navigate('Carros', { atualizaLista: true })
+
                                         return response.json();
                                     })
                                     .catch(error => {
@@ -139,7 +144,7 @@ export default class DetalheVeiculo extends React.Component {
                     </View>
 
                     <View style={{ flex: 1 }}>
-                        <Button title='Deletar'
+                        <Button title='Apagar'
                             color='red'
                             onPress={() => {
 
@@ -167,7 +172,7 @@ export default class DetalheVeiculo extends React.Component {
 
                 </View>
 
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -188,18 +193,23 @@ const styles = StyleSheet.create({
     },
     inputModal: {
         padding: 5,
-        width: 100,
-        height: 40,
+        width: 220,
+        height: 50,
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#16164E',
     },
     inputModal2: {
         padding: 5,
-        width: 80,
-        height: 40,
+        width: 120,
+        height: 50,
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#16164E',
     }
 });
+
+
+/*
+
+                */

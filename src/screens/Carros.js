@@ -12,9 +12,9 @@ export default class Carros extends React.Component {
 
         this.state = {
             carros: [],
-            loading: true
-        };
-
+            loading: true,
+            atualizaLista: this.props.navigation.getParam('atualizaLista', 'false')
+        };        
         this.GetData();
     }
 
@@ -32,6 +32,12 @@ export default class Carros extends React.Component {
     onRefresh() {
         this.setState({ loading: true });
         this.GetData();
+    }
+
+    async componentDidMount() {
+        if (this.state.atualizaLista) {
+            await this.GetData();
+        }
     }
 
     render() {

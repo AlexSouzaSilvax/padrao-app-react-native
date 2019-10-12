@@ -3,19 +3,19 @@ import {
     View,
     StyleSheet,
     TextInput,
-    Button,
     AsyncStorage,
     Alert,
     Image,
     Text,
-    ImageBackground,
+    TouchableOpacity,
     ToastAndroid,
     KeyboardAvoidingView
 } from 'react-native';
 
-import { url } from '../util'
-import colors from '../styles/colors';
+import { url } from '../util';
 import axios from 'axios';
+
+import logo from '../../assets/logo.png';
 
 export default class Login extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -27,7 +27,7 @@ export default class Login extends React.Component {
 
         this.state = {
             data: [],
-            login: 'alex.silva',
+            login: 'alex',
             senha: '123',
             loading: false
         };
@@ -39,25 +39,49 @@ export default class Login extends React.Component {
         if (this.state.loading) {
             return (
                 <View style={[styles.container, styles.loading]}>
-                    <ImageBackground source={{ uri: this.state.imgBack }} style={{
-                        width: '100%', height: '100%', alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-
-                        <Image
-                            source={require('../../assets/loading.gif')}
-                            style={[styles.loading, { width: 300, height: 300 }]}
-                        />
-
-                    </ImageBackground>
+                    <Image
+                        source={require('../../assets/loading.gif')}
+                        style={[styles.loading, { width: 300, height: 300 }]}
+                    />
                 </View>
-
             );
         } return (
-            <View style={[styles.container, { backgroundColor: colors.backgroundGradient }]}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled >
 
-                <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+                <Image source={logo} style={styles.logo} />
+                <Text style={[{ fontSize: 50, height: 60 }]}>driver now</Text>
 
+                <View style={styles.form}>
+                    <Text style={styles.label}>LOGIN *</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Seu login"
+                        placeholderTextColor="#999"
+                        keyboardType="email-address" // especifica que é um input de e-mail, teclado de e-mail com @ incluso.
+                        autoCapitalize="none" // não permitir que já se inicie texto com caixa alta.
+                        autoCorrect={false} //não permitir fazer correção do texto      
+                        value={this.state.login}
+                        onChangeText={(login) => this.setState({ login })}
+                    />
+
+                    <Text style={styles.label}>SENHA *</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Sua senha"
+                        placeholderTextColor="#999"
+                        autoCorrect={false} //não permitir fazer correção do texto
+                        secureTextEntry={true}
+                        value={this.state.senha}
+                        onChangeText={(senha) => this.setState({ senha })}
+                    />
+
+                    <TouchableOpacity style={styles.button} onPress={this.validacaoLogin.bind(this)}>
+                        <Text style={styles.buttonText}>Acessar</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+                {/*
                     <Image
                         source={require('../../assets/logo.png')}
                         style={{
@@ -94,19 +118,26 @@ export default class Login extends React.Component {
                         style={styles.btnEntrar}
                         onPress={this.validacaoLogin.bind(this)}
                     />
-                    <Text />
+                    <Text />*/}
 
-                </KeyboardAvoidingView>
-
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 
     async validacaoLogin() {
 
         if (this.state.login == null || this.state.senha == null || this.state.login == '' || this.state.senha == '') {
-            Alert.alert('Login/Senha é obrigatório.');
+            //Alert.alert('Login/Senha é obrigatório.');
             //console.log('Login/Senha é obrigatório.');
+
+            ToastAndroid.showWithGravityAndOffset(
+                'Login/Senha é obrigatório.',
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50,
+            );
+
         } else {
             this.setState({ loading: true });
 
@@ -175,6 +206,45 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#FFFFFF',
     },
+    form: {
+        alignSelf: 'stretch',
+        paddingHorizontal: 30,
+        marginTop: 30,
+    },
+    label: {
+        fontWeight: 'bold',
+        color: '#444',
+        marginBottom: 8,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        paddingHorizontal: 20,
+        fontSize: 20,
+        color: '#444',
+        height: 44,
+        marginBottom: 20,
+        borderRadius: 2
+    },
+    button: {
+        height: 42,
+        backgroundColor: '#16164E', //'#f05a5b',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2
+    },
+    buttonText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+    logo: {
+        width: 300,
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+    /*
     input: {
         width: 200,
         height: 44,
@@ -189,4 +259,5 @@ const styles = StyleSheet.create({
     btnEntrar: {
         backgroundColor: 'white'
     }
+    */
 });

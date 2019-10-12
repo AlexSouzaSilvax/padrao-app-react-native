@@ -41,21 +41,21 @@ const AppNavigator = createStackNavigator({
         }
       }
     }, {
-        initialRouteName: 'Carros',
-        tabBarOptions: {
-          activeTintColor: colors.white,
-          inactiveTintColor: colors.black,
-          indicatorStyle: {
-            backgroundColor: colors.primaryDarkColor
-          },
-          style: {
-            backgroundColor: colors.primaryColor,
-            elevation: 0,
-            borderBottomWidth: 0,
-            borderBottomColor: colors.primaryColor
-          }
+      initialRouteName: 'Carros',
+      tabBarOptions: {
+        activeTintColor: colors.white,
+        inactiveTintColor: colors.black,
+        indicatorStyle: {
+          backgroundColor: colors.primaryDarkColor
+        },
+        style: {
+          backgroundColor: colors.primaryColor,
+          elevation: 0,
+          borderBottomWidth: 0,
+          borderBottomColor: colors.primaryColor
         }
-      }),
+      }
+    }),
     navigationOptions: ({ navigation }) => ({
       headerLeft: null,
       headerRight: null,
