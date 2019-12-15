@@ -27,8 +27,8 @@ export default class Login extends React.Component {
 
         this.state = {
             data: [],
-            login: 'alex',
-            senha: '123',
+            login: '',
+            senha: '',
             loading: false
         };
 
@@ -146,21 +146,7 @@ export default class Login extends React.Component {
                     this.setState({ data: response.data, loading: false });
                     console.log('Json login Carregado.');
 
-                    console.log('Tamanho da resposta: ' + this.state.data.length);
-
-                    if (this.state.data.length == 0) {
-                        console.log('A base retornou vazio/null.');
-                        //Alert.alert('Usuário inválido.', 'Tente novamente.');
-
-                        ToastAndroid.showWithGravityAndOffset(
-                            'Usuário inválido.\nTente novamente',
-                            ToastAndroid.LONG,
-                            ToastAndroid.BOTTOM,
-                            25,
-                            50,
-                        );
-
-                    } else {
+                    console.log('Tamanho da resposta: ' + this.state.data.length);                                        
 
                         for (let i = 0; i < this.state.data.length; i++) {
 
@@ -184,10 +170,21 @@ export default class Login extends React.Component {
 
                                 this.setState({ loading: false });
 
+                            } else {
+                            // if (this.state.data.length == 0) {
+                              //  console.log('A base retornou vazio/null.');
+                                //Alert.alert('Usuário inválido.', 'Tente novamente.');
+        
+                                ToastAndroid.showWithGravityAndOffset(
+                                    'Usuário inválido.\nTente novamente',
+                                    ToastAndroid.LONG,
+                                    ToastAndroid.BOTTOM,
+                                    25,
+                                    50,
+                                );
                             }
 
-                        }
-                    }
+                        }                    
 
                     console.log('Acabou o método.');
                 })
